@@ -1,0 +1,5 @@
+coveralls
+pyinstaller
+pytest
+pytest-mpl
+pytest-qt

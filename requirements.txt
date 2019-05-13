@@ -1,0 +1,6 @@
+click
+matplotlib
+numpy
+Pillow
+pyqt5
+scikit-image
