@@ -13,12 +13,12 @@ DOWNLOAD_URL = 'https://github.com/DeMarcoLab/correlateim'
 VERSION = __version__
 PYTHON_VERSION = (3, 5)
 INST_DEPENDENCIES = [
-    'cpselect',
     'matplotlib',
     'numpy',
     'Pillow',
     'pyqt5',
-    'scikit-image'
+    'scikit-image',
+    'scipy',
 ]
 
 if __name__ == '__main__':
