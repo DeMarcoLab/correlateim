@@ -48,6 +48,34 @@ def test_apply_transform(example_affine_matrix):
     return fig
 
 
+def test_apply_transform_dimension_mismatch(example_affine_matrix):
+    image = np.random.random((10, 10, 3))
+    with pytest.raises(ValueError):
+        transform.apply_transform(image, example_affine_matrix,
+                                  multichannel=False)
+
+@pytest.mark.mpl_image_compare
+def test_apply_transform_multichannel_false(example_affine_matrix):
+    image = skimage.img_as_float(skimage.data.camera())
+    output = transform.apply_transform(image, example_affine_matrix,
+                                       multichannel=False)
+    fig = plt.figure()
+    ax = fig.add_subplot(1, 1, 1)
+    ax.imshow(output)
+    return fig
+
+
+@pytest.mark.mpl_image_compare
+def test_apply_transform_inverse(example_affine_matrix):
+    image = skimage.data.astronaut()
+    output = transform.apply_transform(image, example_affine_matrix,
+                                       inverse=False)
+    fig = plt.figure()
+    ax = fig.add_subplot(1, 1, 1)
+    ax.imshow(output)
+    return fig
+
+
 def test_calculate_transform(source_coords, destination_coords):
     output = transform.calculate_transform(source_coords, destination_coords)
     expected_output = np.array(

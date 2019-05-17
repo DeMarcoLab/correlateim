@@ -30,11 +30,12 @@ def apply_transform(image, transformation, inverse=True, multichannel=True):
         transformation = np.linalg.inv(transformation)
 
     if not multichannel:
-        if image.ndim != transformation.shape[0] - 1:
+        if image.ndim == 2:
+            image = skimage.color.gray2rgb(image)
+        elif image.ndim != transformation.shape[0] - 1:
             raise ValueError('Unexpected number of image dimensions for the '
                              'input transformation. Did you need to use: '
                              'multichannel=True ?')
-        image = np.expand_dims(image, -1)
 
     # move channel axis to the front for easier iteration over array
     image = np.moveaxis(image, -1, 0)
