@@ -15,7 +15,7 @@ from correlateim.cpselect import cpselect
 @click.argument('input_filename_1')
 @click.argument('input_filename_2')
 @click.argument('output_filename')
-def main(input_filename_1, input_filename_2, output_filename):
+def correlate_images(input_filename_1, input_filename_2, output_filename):
     # User select matched control points
     matched_points_dict = cpselect(input_filename_1, input_filename_2)
     print(matched_points_dict)
@@ -31,8 +31,8 @@ def main(input_filename_1, input_filename_2, output_filename):
     result = imageproc.overlay_images(image_1_aligned, image_2)
     # Finish and tidy up
     plt.imsave(output_filename, result)
-    print('Saved image overlay result to: "
-          "'{}'".format(os.path.abspath(output_filename))
+    print('Saved image overlay result to: '
+          '{}'.format(os.path.abspath(output_filename))
     )
     plt.imshow(result)
     plt.show()
@@ -40,4 +40,4 @@ def main(input_filename_1, input_filename_2, output_filename):
 
 
 if __name__=='__main__':
-    main()
+    correlate_images()
