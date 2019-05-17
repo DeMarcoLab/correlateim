@@ -1,0 +1,26 @@
+name: correlateim
+
+channels:
+  - defaults
+  - conda-forge
+
+dependencies:
+  - python=3.6.*
+  - pip
+  - autopep8
+  - click
+  - coveralls
+  - flake8>=3.7.0
+  - matplotlib
+  - numpy
+  - Pillow
+  - pyinstaller
+  - pytest
+  - pytest-cov
+  - pytest-flake8
+  - pytest-mpl
+  - pytest-qt
+  - scikit-image
+  - scipy
+  - pip:
+    - PyQt5
