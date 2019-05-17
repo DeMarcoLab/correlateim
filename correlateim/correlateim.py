@@ -29,9 +29,11 @@ def main(input_filename_1, input_filename_2, output_filename):
                                        anti_aliasing=True)
     image_1_aligned = transform.apply_transform(image_1, transformation)
     result = imageproc.overlay_images(image_1_aligned, image_2)
-    # Finish and tidy .
-    output_filename = os.path.join(os.path.splitext(output_filename)[0], '.png')
+    # Finish and tidy up
     plt.imsave(output_filename, result)
+    print('Saved image overlay result to: "
+          "'{}'".format(os.path.abspath(output_filename))
+    )
     plt.imshow(result)
     plt.show()
     return result
