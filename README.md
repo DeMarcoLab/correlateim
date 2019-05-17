@@ -22,6 +22,11 @@ cd correlateim
 ```
 
 ```
+conda env create -f environment.yml
+conda activate correlateim
+```
+
+```
 pip install -r requirements.txt
 pip install -r requirements-dev.txt
 ```
