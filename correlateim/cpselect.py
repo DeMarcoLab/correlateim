@@ -1,3 +1,8 @@
+"""Matched control point selection via interactive user interface.
+
+Code adapted from: https://github.com/adal02/cpselect
+"""
+
 import sys
 import os
 
