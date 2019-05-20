@@ -1,5 +1,6 @@
 import numpy as np
 import scipy.ndimage as ndi
+import skimage
 from skimage.transform import AffineTransform
 
 
