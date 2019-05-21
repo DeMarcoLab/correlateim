@@ -27,14 +27,12 @@ def cpselect(img_path1, img_path2):
 
     :return: list with one tuple per control point (ID, x image 1, y image 1, x image 2, y image 2)
     """
-    global img1
-    global img2
     img1 = plt.imread(img_path1)
     img2 = plt.imread(img_path2)
     img1 = skimage.transform.resize(img1, img2.shape)
 
     app = QApplication(sys.argv)
-    cps = _MainWindow()
+    cps = _MainWindow(img1, img2)
     cps.raise_()
     app.exec_()
 
@@ -42,14 +40,15 @@ def cpselect(img_path1, img_path2):
     for cp in cps.wp.canvas.CPlist:
         dictlist.append(cp.getdict)
 
-    del img1, img2
-
     return dictlist
 
 
 class _MainWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self, img1, img2):
         super().__init__()
+
+        self.img1 = img1
+        self.img2 = img2
 
         # os.path.join(__file__, relative)
 
@@ -84,7 +83,7 @@ class _MainWindow(QMainWindow):
         hlay.addLayout(vlay)
         hlay.addLayout(vlay2)
 
-        self.wp = _WidgetPlot(self)
+        self.wp = _WidgetPlot(self, img1=self.img1, img2=self.img2)
         vlay.addWidget(self.wp)
 
         self.help = QTextEdit()
@@ -226,23 +225,30 @@ class _MainWindow(QMainWindow):
 
 class _WidgetPlot(QWidget):
     def __init__(self, *args, **kwargs):
+        try:
+            img1 = kwargs['img1']
+            img2 = kwargs['img2']
+            del kwargs['img1']
+            del kwargs['img2']
+        except KeyError:
+            raise KeyError('Variables img1 & img2 not passed to PyQt widget.')
         QWidget.__init__(self, *args, **kwargs)
         self.setLayout(QVBoxLayout())
-        self.canvas = _PlotCanvas(self)
+        self.canvas = _PlotCanvas(self, img1=img1, img2=img2)
         self.toolbar = NavigationToolbar(self.canvas, self)
         self.layout().addWidget(self.toolbar)
         self.layout().addWidget(self.canvas)
 
 
 class _PlotCanvas(FigureCanvas):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, img1=None, img2=None):
         self.fig = Figure()
         FigureCanvas.__init__(self, self.fig)
         self.setParent(parent)
         FigureCanvas.setSizePolicy(
             self, QSizePolicy.Expanding, QSizePolicy.Expanding)
         FigureCanvas.updateGeometry(self)
-        self.plot()
+        self.plot(img1, img2)
         self.createConn()
 
         self.figureActive = False
@@ -256,7 +262,7 @@ class _PlotCanvas(FigureCanvas):
         self.CPlist = []
         self.lastIDP = 0
 
-    def plot(self):
+    def plot(self, img1, img2):
         gs0 = self.fig.add_gridspec(1, 2)
 
         self.ax11 = self.fig.add_subplot(
