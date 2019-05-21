@@ -17,8 +17,9 @@ def test_imread_rgb():
 
 def test_imread_grayscale():
     current_directory = os.path.dirname(os.path.realpath(__file__))
-    filename = os.path.realpath(os.path.join(current_directory, '..', 'data',
-        'worm_scanning-electron-microscopy.tif'))
+    filename = os.path.realpath(
+        os.path.join(current_directory, '..', 'data',
+                     'worm_scanning-electron-microscopy.tif'))
     output = correlateim.io.imread(filename)
     assert output.dtype == float
     assert output.shape == (2048, 3072, 3)

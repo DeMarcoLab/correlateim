@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 import skimage.color
 import skimage.transform
 
-from correlateim import io
 from correlateim import imageproc
 from correlateim import transform
 from correlateim.cpselect import cpselect
@@ -32,12 +31,11 @@ def correlate_images(input_filename_1, input_filename_2, output_filename):
     # Finish and tidy up
     plt.imsave(output_filename, result)
     print('Saved image overlay result to: '
-          '{}'.format(os.path.abspath(output_filename))
-    )
+          '{}'.format(os.path.abspath(output_filename)))
     plt.imshow(result)
     plt.show()
     return result
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
     correlate_images()

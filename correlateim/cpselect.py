@@ -7,15 +7,17 @@ import sys
 import os
 
 import click
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+from PyQt5.QtCore import *    # noqa: F405
+from PyQt5.QtGui import *     # noqa: F405
+from PyQt5.QtWidgets import * # noqa: F405
 from matplotlib import pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
 import skimage.io
 import skimage.transform
+
+from correlateim._version import __version__
 
 
 def cpselect(img_path1, img_path2):
@@ -25,7 +27,8 @@ def cpselect(img_path1, img_path2):
     :param img_path1: path to the first image
     :param img_path2: path to the second image
 
-    :return: list with one tuple per control point (ID, x image 1, y image 1, x image 2, y image 2)
+    :return: list with one tuple per control point
+        (ID, x image 1, y image 1, x image 2, y image 2)
     """
     img1 = plt.imread(img_path1)
     img2 = plt.imread(img_path2)
@@ -66,9 +69,10 @@ class _MainWindow(QMainWindow):
         q1.start(100)
 
     def createWindow(self):
-        self.setWindowTitle('Control Point Selection Tool')
-        self.setWindowIcon(
-            QIcon(os.path.join(os.path.dirname(__file__), 'img/cpselect32.ico')))
+        self.setWindowTitle('Control Point Selection Tool '
+                            '(correlateim version {})'.format(__version__))
+        self.setWindowIcon(QIcon(os.path.join(
+            os.path.dirname(__file__), 'img/cpselect32.ico')))
 
         widget = QWidget(self)
 
@@ -91,16 +95,43 @@ class _MainWindow(QMainWindow):
         self.help.setMaximumWidth(400)
         self.help.setMinimumHeight(540)
 
-        help_header = '<!DOCTYPE html><html lang="de" id="main"><head><meta charset="UTF-8"><title>Description of cpselect for Python</title><style>td,th{font-size:14px;}p{font-size: 14px;}</style></head>'
-        help_body = '<body><h1>Description of cpselect for Python&emsp;</h1><h2>Navigation Toolbar</h2><img src="{}" alt="navbuttons"><br/><table cellspacing="20px"><tr><th valign="middle" height="20px">Tool</th><th valign="middle" height="20px">how to use</th></tr><tr><td><img src="{}" alt="homebutton"></td><td valign="middle">For all Images, reset to the original view.</td></tr><tr><td><img src="{}" alt="backwardforwardbutton"></td><td valign="middle">Go back to the last or forward to the next view.</td></tr><tr><td><img src="{}" alt="panzoombutton"></td><td valign="middle">Activate the pan/zoom tool. Pan with left mouse button, zoom with right</td></tr><tr><td><img src="{}" alt="backwardforwardbutton"></td><td valign="middle">Zoom with drawing a rectangle</td></tr></table><h2>Pick Mode</h2><p>Change into pick mode to pick up your control points. You have to pick the control points in both images before you can start to pick the next point.</p><p>Press the red button below to start pick mode.</p><h2>Control Point list</h2><p>Below in the table, all your control points are listed. You can delete one ore more selected control points with the <b>delete</b> button.</p><h2>Return</h2><p>If you are finished, please press the <b>return</b> button below. You will come back to wherever you have been.</p></body></html>'
-        help_html = help_header + help_body.format(os.path.join(os.path.dirname(__file__), 'img/navbuttons.PNG'),
-                                                   os.path.join(os.path.dirname(
-                                                       __file__), 'img/homebutton.png'),
-                                                   os.path.join(os.path.dirname(
-                                                       __file__), 'img/backforwardbutton.png'),
-                                                   os.path.join(os.path.dirname(
-                                                       __file__), 'img/panzoombutton.png'),
-                                                   os.path.join(os.path.dirname(__file__), 'img/zoomboxbutton.png'))
+        help_header = '''
+            <!DOCTYPE html><html lang="de" id="main">
+            <head><meta charset="UTF-8">
+            <title>Description of cpselect for Python</title>
+            <style>td,th{font-size:14px;}p{font-size: 14px;}</style></head>
+            '''
+        help_body = '''
+            <body><h1>Description of cpselect for Python&emsp;
+            </h1><h2>Navigation Toolbar</h2><img src="{}"
+            alt="navbuttons"><br/><table cellspacing="20px"><tr>
+            <th valign="middle" height="20px">Tool</th>
+            <th valign="middle" height="20px">how to use</th></tr>
+            <tr><td><img src="{}" alt="homebutton"></td>
+            <td valign="middle">For all Images, reset to the original view.
+            </td></tr><tr><td><img src="{}" alt="backwardforwardbutton"></td>
+            <td valign="middle">Go back to the last or forward to the next
+            view.</td></tr><tr><td><img src="{}" alt="panzoombutton"></td>
+            <td valign="middle">Activate the pan/zoom tool. Pan with left
+            mouse button, zoom with right</td></tr><tr><td><img src="{}"
+            alt="backwardforwardbutton"></td><td valign="middle">
+            Zoom with drawing a rectangle</td></tr></table><h2>Pick Mode
+            </h2><p>Change into pick mode to pick up your control points.
+            You have to pick the control points in both images before you can
+            start to pick the next point.</p><p>Press the red button below to
+            start pick mode.</p><h2>Control Point list</h2><p>Below in the
+            table, all your control points are listed. You can delete one
+            ore more selected control points with the <b>delete</b> button.
+            </p><h2>Return</h2><p>If you are finished, please press the
+            <b>return</b> button below. You will come back to wherever you
+            have been.</p></body></html>
+            '''
+        help_html = help_header + help_body.format(
+            os.path.join(os.path.dirname(__file__), 'img/navbuttons.PNG'),
+            os.path.join(os.path.dirname(__file__), 'img/homebutton.png'),
+            os.path.join(os.path.dirname(__file__), 'img/backforwardbutton.png'),
+            os.path.join(os.path.dirname(__file__), 'img/panzoombutton.png'),
+            os.path.join(os.path.dirname(__file__), 'img/zoomboxbutton.png'))
         self.help.insertHtml(help_html)
         self.cpTabelModel = QStandardItemModel(self)
         self.cpTable = QTableView(self)
@@ -140,7 +171,7 @@ class _MainWindow(QMainWindow):
     def pickmodechange(self):
 
         if self.wp.canvas.toolbar._active in ['', None]:
-            if self.wp.canvas.pickmode == True:
+            if self.wp.canvas.pickmode is True:
                 self.wp.canvas.pickMode_changed = True
                 self.wp.canvas.pickmode = False
                 self.statusBar().showMessage('Pick Mode deactivate.')
@@ -150,7 +181,8 @@ class _MainWindow(QMainWindow):
                 self.wp.canvas.pickMode_changed = True
                 self.wp.canvas.pickmode = True
                 self.wp.canvas.toolbar._active = ''
-                self.statusBar().showMessage('Pick Mode activate. Select Control Points.')
+                self.statusBar().showMessage(
+                    'Pick Mode activated. Select Control Points.')
         else:
             self.statusBar().showMessage(
                 'Please, first deactivate the selected navigation tool '
@@ -199,8 +231,8 @@ class _MainWindow(QMainWindow):
         self.wp.canvas.cpChanged = False
         self.cpTable.clearSelection()
         self.cpTabelModel.clear()
-        self.cpTabelModel.setHorizontalHeaderLabels(
-            ['Point Number', 'x (Img 1)', 'y (Img 1)', 'x (Img 2)', 'y (Img 2)'])
+        self.cpTabelModel.setHorizontalHeaderLabels(['Point Number',
+            'x (Img 1)', 'y (Img 1)', 'x (Img 2)', 'y (Img 2)'])
 
         for cp in self.wp.canvas.CPlist:
             idp, x1, y1, x2, y2 = cp.coordText
@@ -266,9 +298,11 @@ class _PlotCanvas(FigureCanvas):
         gs0 = self.fig.add_gridspec(1, 2)
 
         self.ax11 = self.fig.add_subplot(
-            gs0[0], xticks=[], yticks=[], title='Image 1: select Control Points')
+            gs0[0], xticks=[], yticks=[],
+            title='Image 1: Select Control Points')
         self.ax12 = self.fig.add_subplot(
-            gs0[1], xticks=[], yticks=[], title='Image 2: select Control Points')
+            gs0[1], xticks=[], yticks=[],
+            title='Image 2: Select Control Points')
 
         self.ax11.imshow(img1)
         self.ax12.imshow(img2)
@@ -350,7 +384,8 @@ class _PlotCanvas(FigureCanvas):
         if self.toolbar.mode != '':
             self.pickmode = False
 
-        if self.pickmode and (event.inaxes == self.ax11 or event.inaxes == self.ax12):
+        if self.pickmode and (event.inaxes == self.ax11 or
+                              event.inaxes == self.ax12):
 
             if self.CPactive and not self.CPactive.status_complete:
                 self.CPactive.appendCoord(x, y)
@@ -403,12 +438,26 @@ class _ControlPoint:
     @property
     def coordText(self):
         if self.img1x and not self.img2x:
-            return str(round(self.idp, 2)), str(round(self.img1x, 2)), str(round(self.img1y, 2)), '', ''
+            result = tuple(str(round(self.idp, 2)),
+                           str(round(self.img1x, 2)),
+                           str(round(self.img1y, 2)),
+                           '',
+                           '')
+            return result
         elif not self.img1x and self.img2x:
-            return str(round(self.idp, 2)), '', '', str(round(self.img2x, 2)), str(round(self.img2y, 2))
+            result = tuple(str(round(self.idp, 2)),
+                           '',
+                           '',
+                           str(round(self.img2x, 2)),
+                           str(round(self.img2y, 2)))
+            return result
         else:
-            return str(round(self.idp, 2)), str(round(self.img1x, 2)), str(round(self.img1y, 2)), str(
-                round(self.img2x, 2)), str(round(self.img2y, 2))
+            result = tuple(str(round(self.idp, 2)),
+                           str(round(self.img1x, 2)),
+                           str(round(self.img1y, 2)),
+                           str(round(self.img2x, 2)),
+                           str(round(self.img2y, 2)))
+            return result
 
     def __str__(self):
         return 'CP {}: {}'.format(self.idp, self.coord)

@@ -1,3 +1,5 @@
+import matplotlib
+matplotlib.use('Agg')  # noqa: E402
 import matplotlib.pyplot as plt
 import numpy as np
 import pytest
@@ -34,7 +36,7 @@ def example_affine_matrix():
     c, s = np.cos(r), np.sin(r)
     matrix_transform = np.array([[c, -s, 0],
                                  [s, c, 50],
-                                 [0, 0,  1]])
+                                 [0, 0, 1]])
     return matrix_transform
 
 
@@ -53,6 +55,7 @@ def test_apply_transform_dimension_mismatch(example_affine_matrix):
     with pytest.raises(ValueError):
         transform.apply_transform(image, example_affine_matrix,
                                   multichannel=False)
+
 
 @pytest.mark.mpl_image_compare
 def test_apply_transform_multichannel_false(example_affine_matrix):
