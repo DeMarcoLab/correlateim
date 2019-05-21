@@ -1,18 +1,14 @@
 build: false
 
+image:
+- Visual Studio 2015
+- Ubuntu
+
 platform:
   - x64
 
-matrix:
-  allow_failures:
-    - PYTHON_VERSION: 3.5.2
-
 environment:
   matrix:
-    - PYTHON_VERSION: 3.5.2
-      MINICONDA: C:\Miniconda3
-    - PYTHON_VERSION: 3.5
-      MINICONDA: C:\Miniconda3
     - PYTHON_VERSION: 3.6
       MINICONDA: C:\Miniconda3
     - PYTHON_VERSION: 3.7
