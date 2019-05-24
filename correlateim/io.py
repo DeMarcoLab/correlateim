@@ -1,6 +1,11 @@
+import os
+import time
+
 import skimage.color
 import skimage.io
 import skimage.transform
+
+from correlateim._version import __version__
 
 
 def imread(filename):
@@ -67,3 +72,53 @@ def resize_and_save(filename, image, shape):
     skimage.io.imsave(filename, skimage.img_as_ubyte(image))
 
     return skimage.img_as_ubyte(image)
+
+
+def _timestamp():
+    """Create timestamp string of current local time.
+
+    Returns
+    -------
+    str
+        Timestamp string
+    """
+    timestamp = time.strftime('%d-%b-%Y_%H-%M%p', time.localtime())
+    return timestamp
+
+
+def save_text(input_filename_1, input_filename_2, output_filename,
+              transformation, matched_points_dict):
+    """Save text summary of transformation matrix and image control points.
+
+    Parameters
+    ----------
+    input_filename_1 : str
+        Filename of input image 1.
+    input_filename_2 : str
+        Filename of input image 2.
+    output_filename : str
+        Filename for saving output overlay image file.
+    transformation : ndarray
+        Transformation matrix relating the two images.
+    matched_points_dict : list of dict
+        User selected matched control point pairs.
+
+    Returns
+    -------
+    str
+        Filename of output text file.
+    """
+
+    output_text_filename = os.path.splitext(output_filename)[0] + '.txt'
+    with open(output_text_filename, 'w') as f:
+        f.write(_timestamp() + '\n')
+        f.write('correlateim version {}\n'.format(__version__))
+        f.write('\nUSER INPUT\n')
+        f.write(input_filename_1 + '\n')
+        f.write(input_filename_2 + '\n')
+        f.write('\nTRANSFORMATION MATRIX\n')
+        f.write(str(transformation) + '\n')
+        f.write('\nUSER SELECTED CONTROL POINTS\n')
+        f.write(str(matched_points_dict) + '\n')
+
+    return output_text_filename

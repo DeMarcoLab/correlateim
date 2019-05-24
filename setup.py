@@ -13,6 +13,7 @@ DOWNLOAD_URL = 'https://github.com/DeMarcoLab/correlateim'
 VERSION = __version__
 PYTHON_VERSION = (3, 5)
 INST_DEPENDENCIES = [
+    'click',
     'matplotlib',
     'numpy',
     'Pillow',
