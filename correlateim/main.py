@@ -7,7 +7,7 @@ import skimage.transform
 
 from correlateim import imageproc
 from correlateim import transform
-from correlateim.cpselect import cpselect
+from correlateim.cpselect import cpselect_read_files
 
 
 @click.command()
@@ -16,7 +16,8 @@ from correlateim.cpselect import cpselect
 @click.argument('output_filename')
 def correlate_images(input_filename_1, input_filename_2, output_filename):
     # User select matched control points
-    matched_points_dict = cpselect(input_filename_1, input_filename_2)
+    matched_points_dict = cpselect_read_files(input_filename_1,
+                                              input_filename_2)
     print(matched_points_dict)
     # Calculate and apply affine transformation
     src, dst = transform.point_coords(matched_points_dict)
