@@ -30,5 +30,8 @@ if __name__ == '__main__':
           long_description=LONG_DESCRIPTION,
           author=MAINTAINER,
           packages=find_packages(),
-          install_requires=INST_DEPENDENCIES
+          install_requires=INST_DEPENDENCIES,
+          entry_points={
+              'console_scripts': ['correlateim = correlateim.main:main'],
+              },
           )
