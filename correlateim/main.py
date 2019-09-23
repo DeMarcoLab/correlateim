@@ -50,4 +50,4 @@ def correlate_images(input_filename_1, input_filename_2, output_filename):
 
 
 if __name__ == '__main__':
-    correlate_images()
+    main()
