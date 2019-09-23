@@ -15,6 +15,11 @@ from correlateim.io import save_text
 @click.argument('input_filename_1')
 @click.argument('input_filename_2')
 @click.argument('output_filename')
+def main(input_filename_1, input_filename_2, output_filename):
+    result = correlate_images(input_filename_1, input_filename_2, output_filename)
+    return result
+
+
 def correlate_images(input_filename_1, input_filename_2, output_filename):
     # User select matched control points
     matched_points_dict = cpselect_read_files(input_filename_1,
