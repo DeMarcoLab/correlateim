@@ -7,7 +7,7 @@ import skimage.transform
 
 from correlateim import imageproc
 from correlateim import transform
-from correlateim.cpselect import cpselect_read_files
+import correlateim.cpselect
 from correlateim.io import save_text
 
 
@@ -15,10 +15,17 @@ from correlateim.io import save_text
 @click.argument('input_filename_1')
 @click.argument('input_filename_2')
 @click.argument('output_filename')
+def main(input_filename_1, input_filename_2, output_filename):
+    result = correlate_images(input_filename_1,
+                              input_filename_2,
+                              output_filename)
+    return result
+
+
 def correlate_images(input_filename_1, input_filename_2, output_filename):
     # User select matched control points
-    matched_points_dict = cpselect_read_files(input_filename_1,
-                                              input_filename_2)
+    matched_points_dict = correlateim.cpselect.cpselect_read_files(
+        input_filename_1, input_filename_2)
     if matched_points_dict == []:
         print('No control points selected, exiting.')
         return
@@ -45,4 +52,4 @@ def correlate_images(input_filename_1, input_filename_2, output_filename):
 
 
 if __name__ == '__main__':
-    correlate_images()
+    main()
