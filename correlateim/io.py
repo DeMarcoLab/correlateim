@@ -1,6 +1,7 @@
 import os
 import time
 
+import numpy as np
 import skimage.color
 import skimage.io
 import skimage.transform
@@ -108,6 +109,9 @@ def save_text(input_filename_1, input_filename_2, output_filename,
     str
         Filename of output text file.
     """
+    transformation_filename = os.path.splitext(output_filename)[0] + '.npy'
+    np.save(transformation_filename, transformation)
+    # You can use numpy.load() to read back in .npy numpy files
 
     output_text_filename = os.path.splitext(output_filename)[0] + '.txt'
     with open(output_text_filename, 'w') as f:
