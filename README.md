@@ -10,12 +10,22 @@ The interactive GUI module is adapted from [cpselect](https://github.com/adal02/
 
 ### Installation
 
-Please clone this repository, install the requirements, then install `correateim`:
+We recommend you use a python virtual environment.
+We use conda, included in the [Anaconda python distribution (download here)](https://www.anaconda.com/distribution/).
+First, make and activate a new environment:
+
+```
+conda create -n correlateim-env pip python=3.6
+conda activate correlateim-env
+```
+
+Please clone this repository, install the requirements, then install `correateim`.
+If you don't already have git installed, [you can download git here](https://git-scm.com/downloads).
 
 ```
 git clone https://github.com/DeMarcoLab/correlateim.git
 cd correlateim
-pip install -f requirements.txt
+pip install r requirements.txt
 pip install .
 ```
 
