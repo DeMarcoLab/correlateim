@@ -10,11 +10,30 @@ The interactive GUI module is adapted from [cpselect](https://github.com/adal02/
 
 ### Installation
 
-See the `correlateim` [releases page](https://github.com/DeMarcoLab/correlateim/releases). Downloading a precompiled `.exe` file is the simplest and quickest method.
+Please clone this repository, install the requirements, then install `correateim`:
+
+```
+git clone https://github.com/DeMarcoLab/correlateim.git
+cd correlateim
+pip install -f requirements.txt
+pip install .
+```
+
 
 ### Demo data
 
 Demonstration data can be found in the [data/](data/) directory.
+
+For example using the sudoku image demo data;
+
+```
+# This assumes you are in the top level of the correlateim repository.
+# If not, change into that directory using the "cd" command 
+correlateim data/sudoku.tif data/sudoku_warped.tif path/for/your/example-output.png
+```
+
+Note:
+* The output filename MUST be .png
 
 ### Running the program
 
@@ -41,6 +60,8 @@ When you are satisfied, click the 'Return' button in the bottom right hand corne
 
 
 ### Alternative installation methods
+See the `correlateim` [releases page](https://github.com/DeMarcoLab/correlateim/releases). Downloading a precompiled `.exe` file is the simplest and quickest method.
+
 There are a number of alternative installation options available:
 
 * download the pre-compiled executable files
