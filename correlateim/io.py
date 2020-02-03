@@ -87,15 +87,15 @@ def _timestamp():
     return timestamp
 
 
-def save_text(input_filename_1, input_filename_2, output_filename,
+def save_text(image_filename_1, image_filename_2, output_filename,
               transformation, matched_points_dict):
     """Save text summary of transformation matrix and image control points.
 
     Parameters
     ----------
-    input_filename_1 : str
+    image_filename_1 : str
         Filename of input image 1.
-    input_filename_2 : str
+    image_filename_2 : str
         Filename of input image 2.
     output_filename : str
         Filename for saving output overlay image file.
@@ -118,8 +118,8 @@ def save_text(input_filename_1, input_filename_2, output_filename,
         f.write(_timestamp() + '\n')
         f.write('correlateim version {}\n'.format(__version__))
         f.write('\nUSER INPUT\n')
-        f.write(input_filename_1 + '\n')
-        f.write(input_filename_2 + '\n')
+        f.write(image_filename_1 + '\n')
+        f.write(image_filename_2 + '\n')
         f.write('\nTRANSFORMATION MATRIX\n')
         f.write(str(transformation) + '\n')
         f.write('\nUSER SELECTED CONTROL POINTS\n')
