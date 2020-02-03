@@ -44,7 +44,7 @@ conda activate correlateim
 
 ### 2. Download and install the latest release
 Then download the latest wheel file from the release page at: https://github.com/DeMarcoLab/correlateim/releases
-Please contact the mainainer if you do not have access to the private Github repository.
+Please contact the maintainer if you do not have access to the private Github repository.
 
 You can install the python wheel file using pip:
 
