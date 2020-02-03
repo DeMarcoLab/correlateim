@@ -38,7 +38,7 @@ We use conda, included in the [Anaconda python distribution (download here)](htt
 First, make and activate a new environment:
 
 ```
-conda create -n correlatei pip python=3.6
+conda create -n correlateim pip python=3.6
 conda activate correlateim
 ```
 
