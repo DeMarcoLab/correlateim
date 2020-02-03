@@ -58,3 +58,18 @@ def test_save_text(tmpdir):
                                       transformation,
                                       matched_points_dict)
     assert result == expected_text_filename
+
+
+def test_save_numpy_array(tmpdir):
+    output_iamge_filename = os.path.abspath(os.path.join(tmpdir, 'output.png'))
+    expected_npy_filename = os.path.abspath(
+        os.path.join(tmpdir, 'output.npy'))
+    transformation = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+    matched_points_dict = [{'key1': 1, 'key2': 2, 'key3': 3}]
+    correlateim.io.save_text('input_filename_1.tif',
+                             'input_filename_2.tif',
+                             output_iamge_filename,
+                             transformation,
+                             matched_points_dict)
+    result = np.load(expected_npy_filename)
+    assert np.allclose(transformation, result)

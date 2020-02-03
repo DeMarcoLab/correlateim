@@ -1,4 +1,5 @@
 import os
+import sys
 from unittest.mock import patch
 
 from click.testing import CliRunner
@@ -57,6 +58,7 @@ def test_correlate_images(tmpdir, sudoku_image_filenames):
                                           filename_out)
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
+    ax.axis('off')
     ax.imshow(output)
     return fig
 
@@ -90,7 +92,18 @@ def test_main(tmpdir, sudoku_image_filenames):
 
 def test_entry_point():
     exit_value = os.system('correlateim')
-    # Expect error value 2 for the case where no command line args are given.
-    # if the correlateim entry point was not correctly configured in setup.py
-    # then we would see error code 1 instead here.
-    assert exit_value == 2
+    # Expect error since no command line arguments are given.
+    # The exact exit value is dependent on the operating system.
+    if sys.platform == 'windows':
+        # Windows: expect exit value 2 if no command line arguments are given.
+        # If the entry point was not correctly configured in setup.py
+        # then we would see an exit value of 1 here instead.
+        assert exit_value == 2
+    elif sys.platform == 'linux':
+        # Linux: expect exit value 512 if no command line arguments are given.
+        # If the entry point was not correctly configured in setup.py
+        # then we would see an exit value of 32512 here instead.
+        assert exit_value == 512
+    # Would be nice to include Mac exit values here at some point, too.
+    else:
+        assert False

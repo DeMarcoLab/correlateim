@@ -46,6 +46,7 @@ def test_apply_transform(example_affine_matrix):
     output = transform.apply_transform(image, example_affine_matrix)
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
+    ax.axis('off')
     ax.imshow(output)
     return fig
 
@@ -64,6 +65,7 @@ def test_apply_transform_multichannel_false(example_affine_matrix):
                                        multichannel=False)
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
+    ax.axis('off')
     ax.imshow(output)
     return fig
 
@@ -75,6 +77,7 @@ def test_apply_transform_inverse(example_affine_matrix):
                                        inverse=False)
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
+    ax.axis('off')
     ax.imshow(output)
     return fig
 
